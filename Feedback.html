@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <style>
+        
+        *{
+            margin: 0 muto !important;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .row {
+    width: 1060px;
+    margin: 0px auto;
+}
+        body,html{
+            overflow-x:hidden;
+            background-color: rgb(92, 140, 162);
+            
+        }
+        .feedback{
+            /* display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; */
+            border-radius: 5px;
+            background-color: white;
+            color: black;
+        }
+        hr{
+            color:gray;
+            width: 100%;
+            font-size: 20px;
+        }
+        .col-12{
+            display: flex !important;
+            flex-direction: column;
+        }
+        .btn1{
+            padding: 10px 20px;
+            background-color: none;
+            color:gray;
+            font-size: 20px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: .2s all ease;
+        }
+        .btn1:hover{
+            color: black;
+        }
+        .submit-btn{
+        width: 35%;
+        margin: 0.6rem 0;
+        border: none;
+        background: #4e88a3;
+        color: white;
+        border-radius: 30px;
+        padding: 6px 15px;
+        cursor: pointer;
+        outline:none;
+        }
+        .submit-btn:hover{
+            outline: none;
+            background-color: #3087b0;
+            
+        }
+        a{
+            text-decoration: none;
+            color: white;
+        }
+        a:hover{
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-12 mt-4">
+            <div><a href="index.html" style="color: white; ">< Back to home</a></div>
+        </div>
+    </div>
+    <div class="container-md feedback my-5 shadow ">
+    <div class="row w-100">
+        <div class="col-12 pt-3 d-flex align-items-center ">
+            <h3 class=" text-ceter">Feedback Form</h2>
+        </div>
+    </div>
+    <hr>
+    <form action="" class="">
+    <div class="row w-100">
+        <div class="col-12 d-flex justify-content-center">
+        <div class=" form-group my-2">
+            <label for="exampleInputEmail1">Enter Your Name: </label> <span style="color: rgb(192, 14, 14); font-size:18px">*</span>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Your Name" required>
+        </div>
+        </div>
+        <div class="col-12">
+        <div class="  form-group my-2">
+            <label for="exampleInputEmail1">Email address</label> <span style="color: rgb(192, 14, 14); font-size:18px">*</span>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Your email" required>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small><br>
+          </div>
+          </div>
+          <div class="col-12">
+          <div class="form-group my-2">
+            <label for="suggestions">Write Your suggestion to add any animals</label> <br>
+            <textarea name="form-control suggestion mt-3 pr-4 " id="suggestions" rows="10" cols="30"></textarea>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group my-2">
+            <label for="exampleFormControlFile1">Choose Image</label><br>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+          </div>
+          </div>
+        <div class="col-12">
+            <button class="submit-btn">Submit</button>
+        </div>
+    </div>
+</form>
+</div>
+</body>
+</html>

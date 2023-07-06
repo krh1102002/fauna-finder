@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <script src="https://kit.fontawesome.com/3401d03427.js" crossorigin="anonymous"></script>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        body{
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        @media (max-width:380px) {
+           .question_box{
+               width: 100%;
+           }
+        }
+        .start_btn, .rules_box,.question_box,.result_box{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            
+        }
+        .start_btn button{
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            /* outline: none; */
+            height: 46px;
+            transition: all .2s ease;
+            display: flex;
+            align-items: center;
+            box-shadow: 2px 2px rgb(0, 0, 0);
+            font-weight: bold;
+            cursor: pointer;
+            /* user-select: none; */
+        }
+        .start_btn button:hover{
+            background-color: rgb(197, 207, 216);
+        }
+        .rules_box{
+            background-color: rgb(15, 13, 13);
+            height: 290px;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 2px 2px rgb(0, 0, 0);
+            user-select: none;
+            transition: all .4s ease;
+            overflow: auto;
+            display: none;
+            
+        }
+        .rules_box.display_rules , 
+        .question_box.display_question,
+        .result_box.display_result{
+            display: block;
+            pointer-events: auto;
+            transform: translate(-50%,-50%);
+        }
+        .rules_box .rules_tittle{
+            padding: 10px 20px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            font: 20px;
+            font-weight: bold;
+            border-bottom: 1px solid wheat;
+            user-select: none;
+        }
+        .rules_box .rules{
+            padding: 10px 20px;
+        }
+        .rules_box .rules .rules_txt{
+            margin-top: 10px;
+            font-size: 17px;
+        }
+        .rules_box .rules_btn{
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            border-top: 1px solid wheat;
+            /* padding: 12px 5px; */
+        }
+        .rules_box .rules_btn button{
+            font-size: 18px;
+            border-radius: 5px;
+            margin-right: 8px;
+            margin-top: 20px;
+            padding: 5px;
+            width: 80px;
+            outline: none;
+            box-shadow: 2px 2px rgb(0, 0, 0);
+            transition: all .3s ease;
+            cursor: pointer;
+        }
+        .question_box{
+            width: 60%;
+            background-color:  rgb(15, 13, 13);
+            color: white;
+            user-select: none;
+            box-shadow: 2px 2px rgb(0, 0, 0);
+            
+            display: none;
+           
+        }
+        .rules_box .rules_btn button:hover{
+            background-color: rgb(197, 207, 216);
+        }
+        .question_box header{
+            display: flex;
+            height: 65px;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid wheat;
+            user-select: none;
+        }
+        .question_box header .title{
+           padding-left: 10px;
+           font-size: 20px;
+           font-weight: bold;
+            
+        }
+        .question_box header .time{
+            width: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-right: 5px;
+            padding:2px 6px;
+            border-radius: 3px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: rgb(156, 233, 233);
+            box-shadow: 2px 2px rgb(0, 0, 0);
+
+        }
+        .question_box header .time .time_txt{
+            color:rgb(4, 15, 15)
+        }
+        .question_box header .time .time_sec{
+            background-color: rgb(4, 15, 15);
+            padding: 6px;
+            border-radius: 5px;
+            margin-left: 5px;
+            font-weight: bold;
+            color: white;
+        }
+        .question_box section{
+            margin: 8px 12px;
+        }
+        .question_box section .questions{
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 12px;
+            user-select: none;
+        }
+        .question_box section .option{
+            background-color: aliceblue;
+            color: black;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            padding:5px 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all .2s ease;
+        }
+        .question_box section .option:hover{
+            background-color: rgb(156, 233, 233);
+        }
+        .question_box section .option.correct{
+            background-color: rgb(85, 168, 85);
+        }
+        .question_box section .option.incorrect{
+            background-color: rgb(204, 51, 51);
+        }
+        .question_box section .option.disabled{
+            pointer-events: none;
+        }
+        .question_box footer{
+            display: flex;
+            height: 50px;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid wheat;
+        }
+        .question_box footer span{
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+        .question_box footer span p{
+            margin:0px 5px;
+            font-size: 18px;
+        }
+        .question_box footer .next_button{
+            padding: 5px;
+            width: 60px;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all .3s ease;
+            font-size: 18px;
+            box-shadow: 2px 2px rgb(0, 0, 0);
+            display: none;
+            transition: all .4s ease-in-out;
+
+        }
+        .question_box footer .next_button.display_btn{
+            display: block;
+        }
+        .question_box footer button:hover{
+            background-color: rgb(197, 207, 216);
+            
+        }
+        .result_box{
+            width: 400px;
+            color: white;
+            border-radius: 5px;
+            background-color: rgb(15, 13, 13);
+            text-align: center;
+            box-shadow: 2px 2px rgb(0, 0, 0);
+            display: none;
+           
+
+        }
+
+        .result_box .logo{
+            font-size: 60px;
+            color: rgb(53, 80, 170);
+        }
+        .result_box .result_txt{
+            font-size: 18px;
+            margin-bottom: 10px;
+            user-select: none;
+        }
+        .result_box .score{
+            font-size: 17px;
+            margin-bottom: 10px;
+            user-select: none;
+        }
+        .result_box .result_btn{
+            margin:10px 0;
+            font-size: 20px;
+        }
+        .result_box .result_btn button{
+           border-radius: 5px;
+            padding: 8px;
+            outline: none;
+            border: none; 
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .result_box .result_btn button:hover{
+            background-color: rgb(156, 156, 184);
+        }
+    </style>
+</head>
+<body>
+    <div class="start_btn">
+        <button >Start Quiz</button>
+    </div>
+         <div class="rules_box">
+        <div class="rules_tittle">Rules for the Quiz</div>
+        <div class="rules">
+                <div class="rules_txt">1. There are total 15 min for the Quiz</div>
+                <div class="rules_txt">2. Each Question will be displayed for only 1 min</div>
+                <div class="rules_txt">3. Once you select the answer it can not be changed</div>
+                <div class="rules_txt">4. Once you start the Quiz you cannot exit from the Quiz</div>
+                <div class="rules_txt">5. Score will be given according to your correct answer</div>   
+        </div>
+        
+        <div class="rules_btn">
+            <button class="exit_btn">Exit</button>
+            <button class="continue_btn">Start</button>
+        </div>
+    </div>  
+     <div class="question_box">
+        <header>
+            <div class="title">Fauna Finder Quiz</div>
+            <div class="time">
+                <div class="time_txt">Time Left</div>
+                <div class="time_sec"></div>
+            </div>
+        </header>
+        <section>
+            <div class="questions">
+                
+            </div>
+            <div class="option-list">
+            
+            </div>
+        </section>
+
+        <footer>
+            <div class="que_num">
+            
+            </div>
+            <button class="next_button">Next</button>
+        </footer>
+    </div>
+     <div class="result_box">
+        <div class="logo">
+            <i class="fa-solid fa-crown"></i>
+         </div>
+        <div class="result_txt">
+            You have completed the Quiz and
+        </div>
+        <div class="score">
+            
+        </div>
+        <div class="result_btn">
+            <button class="Replay_btn">Replay Quiz</button>
+            <a href="index.html"><button class="Exit_btn" onclick="">Exit Quiz</button></a>
+        </div> 
+     </div>  
+    <script>
+        const start = document.querySelector(".start_btn");
+        const rules = document.querySelector(".rules_box");
+        const exit = rules.querySelector(".exit_btn");
+        const cont = rules.querySelector(".continue_btn");
+        const question = document.querySelector(".question_box");
+        const option_list = question.querySelector(".option-list");
+        const next_button = document.querySelector("footer .next_button");
+        const result_box = document.querySelector(".result_box");
+         const time_txt = question.querySelector(".time_txt");
+         const time_sec = question.querySelector(".time_sec");
+       
+         let question_count = 0;
+        let score = 0;
+        let q_count = 1;
+        let timer = 10;
+        var name = "";
+        var countTime;
+        start.onclick = function(){
+            name = prompt("Enter Your Name")
+            rules.classList.add("display_rules");
+            
+        }
+        exit.onclick = function(){
+            rules.classList.remove("display_rules");
+        }
+        cont.onclick  = function(){
+            StartTime(timer);
+            rules.classList.remove("display_rules");
+            
+            question.classList.add("display_question");
+            question_num_count(1);
+            showQuestions(0);
+        }
+        let question_list = [
+            {
+                name:"Which mammal is known to have the most powerful bite in the world?",
+                num: 1,
+                answer: "Hippopotamus",
+                options:[
+                    "Hippopotamus",
+                    "Lion",
+                    "Elephant",
+                    "Leopard"
+                ]
+            },
+            {
+                name:"What object does a male penguin often gift to a female penguin to win her over?",
+                num: 2,
+                answer: "A pebble",
+                options:[
+                    "Pendent",
+                    "Both",
+                    "A pebble",
+                    "None of the above"
+                ]
+            },
+            {
+                name:"How long is an elephant pregnant before it gives birth?",
+                num: 3,
+                answer: "22 months",
+                options:[
+                "9 months",
+                "12 months",
+                "22 months",
+                "None of the above"
+            ]
+        },
+        {
+            name:"What are the only two mammals are the only ones known to lay eggs?",
+            num: 4,
+            answer: "The anteater and the duck-billed platypus",
+            options:[
+                "The anteater and the duck-billed platypus",
+                "Only anteater",
+                "Only Platypus",
+                "None of the above"
+            ]
+        },
+        {
+                name:"Why are flamingos pink?",
+                num: 5,
+                answer: "Because of their diet of algae, shrimps and crustaceans",
+                options:[
+                    "Both",
+                    "Because of their diet of variety of fishes.",
+                    "Because of their diet of algae, shrimps and crustaceans",
+                    "None of the above"
+                ]
+            },
+            {
+                name:"A dog sweats through which part of its body?",
+                num: 6,
+                answer: "Its paws",
+                options:[
+                    "Its paws",
+                    "Its tail",
+                    "Both of the above",
+                    "None of the above"
+                ]
+            },
+            {
+                name:"What is the size of a newborn kangaroo?",
+                num: 7,
+                answer: "1 inch",
+                options:[
+                    "5 inch",
+                    "1 inch",
+                    "10 inch",
+                    "20 inch"
+                ]
+            },
+            {
+                name:"How far away can a wolf smell its prey?",
+                num: 8,
+                answer: "2 miles",
+                options:[
+                "3 miles",
+                "6 miles",
+                "9 miles",
+                "2 miles"
+            ]
+            },
+            {
+                name:"Which animal is known to spend 90% of its day, sleeping?",
+                num: 9,
+                answer: "Koalas",
+                options:[
+                    "Koalas",
+                    "Penguin",
+                    "Deer",
+                    "None of the above"
+                ]
+            },
+            {
+                name:"What color is the tongue of a giraffe?",
+                num: 10,
+                answer: "Purple",
+                options:[
+                    "Purple",
+                    "Black",
+                    "Red",
+                    "None of the above"
+                ]
+            },
+        ]
+        
+        function showQuestions(i){
+           
+            const question_txt = question.querySelector(".questions");
+            const que_txt = question_list[i].name;
+            const que_tag = question_list[i].num + ". " +que_txt;
+            question_txt.innerHTML = que_tag;
+            
+            const option_tag = '<Div class= option>'+question_list[i].options[0]+'</Div>'
+            +'<Div class= option>'+question_list[i].options[1]+'</Div>'
+            +'<Div class= option>'+question_list[i].options[2]+'</Div>'
+            +'<Div class= option>'+question_list[i].options[3]+'</Div>'
+            // console.log(option_tag);
+            question.querySelector(".option-list").innerHTML = option_tag;
+            const option = option_list.querySelectorAll('.option');
+            for(let i = 0;i<option.length;i++){
+                option[i].setAttribute("onclick","SelectedOption(this)");
+            }
+            
+        }
+        function SelectedOption(ans){
+            let user_ans = ans.textContent;
+            clearInterval(countTime);
+            let correct_ans = question_list[question_count].answer;
+            const option_len = option_list.children.length;
+            if(user_ans==correct_ans){
+                score += 1;
+                ans.classList.add("correct");
+            }
+            else{
+                ans.classList.add("incorrect");
+                for(let i = 0;i<option_len;i++){
+                    if(correct_ans == option_list.children[i].textContent){
+                        option_list.children[i].classList.add("correct");
+                    }
+                }
+                
+            }
+            for(let i = 0;i<option_len;i++){
+                    option_list.children[i].classList.add("disabled")
+                }
+                next_button.classList.add("display_btn");
+        }
+        next_button.onclick = () =>{
+            clearInterval(timer);
+            StartTime(timer);
+            if(question_count < question_list.length-1){
+            question_count ++;
+            q_count++;
+            showQuestions(question_count);
+            question_num_count(q_count);
+            next_button.classList.remove("display_btn");
+         }
+        
+        else{
+            ShowResult();
+        }
+    }
+    const q_num = document.querySelector("footer .que_num");
+    function question_num_count(num){
+        const q_tag = '<span><p>'+num+'</p> of <p>10</p> Questions</span>';
+        q_num.innerHTML = q_tag;
+    }
+    function ShowResult(){
+        question.classList.remove("display_question")
+        result_box.classList.add("display_result");
+        const score_txt = result_box.querySelector(".score");
+        const score_tag = 'Your score is ' + score + ' out of 10';
+        score_txt.innerHTML = score_tag;
+    }
+  
+    function StartTime(timer){
+        countTime = setInterval(time,1000);
+        function time(){
+           if(timer>=10)
+            time_sec.textContent = timer;
+            else
+            time_sec.textContent = '0'+timer
+            timer--;
+            if(timer<0){
+                clearInterval(countTime);
+                const option_len = option_list.children.length;
+                const correct_ans = question_list[question_count].answer;
+                console.log(correct_ans);
+                
+                for(let i = 0;i<option_len;i++){
+                    console.log(option_list.children[i].textContent);
+                    if(correct_ans == option_list.children[i].textContent){
+                        option_list.children[i].classList.add("correct");
+                    }
+                }
+                next_button.classList.add("display_btn");
+                for(let i = 0;i<option_len;i++){
+                    option_list.children[i].classList.add("disabled");
+                }
+            }
+        }
+    }
+    const replay_btn = result_box.querySelector(".Replay_btn");
+    const exit_btn = result_box.querySelector(".Exit_btn");
+
+       
+    
+    replay_btn.onclick = () =>{
+        question.classList.add("display_question");
+        result_box.classList.remove("display_result");
+        console.log("Replay Button Clicked")
+        question_count = 0;
+        score = 0;
+        q_count = 1;
+        timer = 10;
+        name = "";
+        showQuestions(question_count);
+        clearInterval(countTime);
+        question_num_count(q_count);
+        StartTime(timer);
+
+    }
+    </script>
+</body>
+</html>

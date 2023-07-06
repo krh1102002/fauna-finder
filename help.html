@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <script src="https://kit.fontawesome.com/021358633c.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            list-style-type: none;
+        }
+        body {
+            background: url('forestbg.webp') no-repeat center center;
+            background-size: cover;
+        }
+        .jj a{
+            transition: all .2s ease;
+        }
+        .jj a:hover {
+            color: rgb(215, 215, 228) !important;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="my-3 ml-3 jj"><a href="index.html" class="text-white px-4" style="text-decoration:none;font-size: 23px;">
+            < Back to home</a>
+    </div>
+    <form method="POST" name="google-sheet">
+        <div class="container">
+            <div class="row d-flex align-items-center">
+                <div class="col-12">
+                    <h1 class="display-4 font-weight-bold text-uppercase text-center text-white" style="font-weight: 500;">Contact us</h1>
+                    <p class="lead text-center text-white" style="font-weight: bold;">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Veniam suscipit, itaque ratione, officiis, fuga perferendis veritatis autem nisi dolor ducimus
+                        necessitatibus? Cumque, voluptatem?</p>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-4 text-white">
+                    <div class="row d-flex align-items-center justify-content-center">
+                        <div class="col-12 mt-md-0 mt-4 d-flex  flex-column align-items-center">
+                            <i class="fa-solid fa-location-dot fa-2x text-white pl-md-5"></i>
+                            <h4 class="pl-3">Location</h4>
+                            <p>Lonere,Raigad,India</p>
+                        </div>
+                        <div class="col-12 mt-md-0 mt-4 d-flex  flex-column align-items-center">
+                            <i class="fa-solid fa-phone fa-2x text-white pl-md-5"></i>
+                            <h4 class="pl-md-4">Call us</h4>
+                            <p>+91 93565 12345</p>
+                        </div>
+                        <div class="col-12 mt-md-0 mt-4 d-flex  flex-column align-items-center">
+                            <i class="fa-solid fa-envelope fa-2x text-white pl-md-5"></i>
+                            <h3 class="pl-md-4 ">e-mail</h3>
+                            <p>faunafinder2@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="contactform">
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <input required type="text" name="Name" id="tbName" class="form-control my-2" placeholder="Name">
+                            </div>
+                            <br>
+                            <div class="col-md-6">
+                                <input required type="email" name="Email" id="tbemail" class="form-control my-2"
+                                    placeholder="E-mail">
+                            </div>
+                            <br>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <input  type="text" name="Subject" id="tbsubject" class="form-control my-2"
+                                    placeholder="Subject">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <textarea name="Massage" id="tbmassage" cols="20" rows="7" class="form-control my-2"
+                                    placeholder="Massage"></textarea>
+                            </div>
+                        </div>
+                        <div class="row py-4">
+                            <div class="col-md-12 d-flex justify-content-end">
+                                <input type="submit" value="Send massage"
+                                    class="btn btn-lg btn-submit btn-outline-light">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <a href="https://docs.google.com/spreadsheets/d/1RXSbqwkAGu63BTUoT1Wwn_kmX39TJsiHr_ONEQdm91c/edit#gid=0"
+                                class="text-white d-none" style="font-size: 23px;">view details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxF22l0Qq5ON08uklNSI60oEEnZ62GNyaZ6F69SqWIIFuz-B_1dHZBbAEwrz5RNkZFfEw/exec'
+        const form = document.forms['google-sheet']
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => alert("Thanks for Contacting us..! We Will Contact You Soon..."))
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+
+        /* <!-- navbar  --> */
+        * {
+            padding: 0px ;
+            margin: 0px;
+            list-style-type: none;
+        }
+        a{
+            text-decoration: none;
+            color: white;
+        }
+        html,body{
+            overflow-x: hidden;
+        }
+        .navbar-dark .navbar-nav .nav-link{
+            color: white;
+        }
+        .cursor-pointer i:hover{
+            color: rgb(123, 123, 180);
+        }
+        .cursor-pointer{
+            cursor: pointer;
+        }
+        .svg-image{
+            justify-content: center;
+            margin-top: 20px;
+            border-radius: 5px;
+            background-image: linear-gradient(rgb(209, 121, 21) ,white ,green);
+        }
+        .svg-image path{
+            fill: rgb(206, 205, 181);
+            stroke: black;
+        }
+        .svg-image path:hover{
+            fill: rgb(150, 100, 26);
+            cursor: pointer;
+        }
+.footer-top{
+    background-color: #020217;
+    color: white;
+}
+.lh-0{
+    line-height: 21px;
+}
